@@ -1,7 +1,17 @@
 [
   {
-    "file": "experiments/example.js",
-    "name": "Name of your experiment",
-    "description": "Explains the what and the why. What is the main idea? What is the purpose? Describes the coding process and implementation choices and gives a high level system overview."
+    "file": "experiments/MolnarColor1.js",
+    "name": "Structures de quadrilatères",
+    "description": "Tried to recreate Molnars Structures de quadrilatères, by using a grid and putting color in a math.random function. "
+  },
+  {
+    "file": "experiments/MolnarColorNoise.js",
+    "name": "Structures de quadrilatères Noise",
+    "description": "Making a variation from the previous one by adding noise to create these ring tunnels creating a spacey look."
+  },
+  {
+    "file": "experiments/MolnarColor3.js",
+    "name": "Structures de quadrilatères Noise 2",
+    "description": "Changing the colors and adding an animation so it moves by 10fps. Also adding a noise on top of the grid just to experiment and see what is possible with the noise."
   }
 ]
