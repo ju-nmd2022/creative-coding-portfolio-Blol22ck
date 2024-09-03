@@ -13,5 +13,20 @@
     "file": "experiments/MolnarColor3.js",
     "name": "Structures de quadrilatères Noise 2",
     "description": "Changing the colors and adding an animation so it moves by 10fps. Also adding a noise on top of the grid just to experiment and see what is possible with the noise."
+  },
+  {
+    "file": "experiments/particleSystems.js",
+    "name": "Particle Systems",
+    "description": "Creating squares that are resembeling the original artwork of Molnar but in a simpler way. The squares are scattering when clicked to show the messy and unclear path of each square. Just like the original artwork it is imperfect and the squares have their own life and will."
+  },
+  {
+    "file": "experiments/particleSystems2.js",
+    "name": "Smaller Particle System",
+    "description": "This variation changes in size and format."
+  },
+  {
+    "file": "experiments/particleSystems3.js",
+    "name": "Velocity Particle System",
+    "description": "This variation is changed in velocity creating sort of a bezier curve where it moves slowly at first and then accelerates."
   }
 ]
