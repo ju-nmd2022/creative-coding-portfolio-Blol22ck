@@ -2,6 +2,17 @@ let fmSynth;
 let wavePath = [];
 let scale = ['C4', 'D4', 'E4', 'F4', 'G4', 'A4', 'B4', 'C5']; // A simple major scale
 let currentNote = '';
+let noteColors = [
+  '#ff0000', // Red for C4
+  '#ff7f00', // Orange for D4
+  '#ffff00', // Yellow for E4
+  '#00ff00', // Green for F4
+  '#0000ff', // Blue for G4
+  '#23CCBE', // Cyan for A4
+  '#8b00ff', // Violet for B4
+  '#ffffff'  // White for C5
+];
+let currentColor = '#ffffff';
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -11,8 +22,8 @@ function setup() {
   Tone.start();
 
   // Set FM modulation parameters for a nicer sound
-  fmSynth.harmonicity.value = 3; // Controls the harmonic content
-  fmSynth.modulationIndex.value = 10; // Intensity of modulation
+  fmSynth.harmonicity.value = 3;
+  fmSynth.modulationIndex.value = 10;
   fmSynth.envelope.attack = 0.1;
   fmSynth.envelope.release = 0.3;
 
@@ -24,19 +35,20 @@ function draw() {
   background(30);
 
   // Map mouse position to a note and amplitude
-  let noteIndex = floor(map(mouseX, 0, width, 0, scale.length)); // Map x to the scale
-  noteIndex = constrain(noteIndex, 0, scale.length - 1); // Constrain within the scale
-  let note = scale[noteIndex]; // Pick a note from the scale
+  let noteIndex = floor(map(mouseX, 0, width, 0, scale.length));
+  noteIndex = constrain(noteIndex, 0, scale.length - 1); 
+  let note = scale[noteIndex];
 
-  let amp = map(mouseY, height, 0, 0, 1); // Amplitude from Y-axis
+  let amp = map(mouseY, height, 0, 0, 1);
 
   // Update the FM Synth volume (amplitude)
-  fmSynth.volume.value = amp * -20; // Scale amplitude to dB
+  fmSynth.volume.value = amp * -20;
 
   // Change note only if it differs from the current note
   if (note !== currentNote && mouseIsPressed) {
     fmSynth.triggerAttack(note);
-    currentNote = note; // Update the current note being played
+    currentNote = note;
+    currentColor = noteColors[noteIndex]; // Change the stroke color based on the note
   }
 
   // Store the mouse position in an array for wave animation
@@ -49,7 +61,7 @@ function draw() {
 
   // Draw the path of the wave
   noFill();
-  stroke(255);
+  stroke(currentColor); // Set the stroke color based on the current note
   strokeWeight(2);
   beginShape();
   for (let i = 0; i < wavePath.length; i++) {
@@ -66,6 +78,7 @@ function mousePressed() {
   let note = scale[noteIndex];
   fmSynth.triggerAttack(note);
   currentNote = note;
+  currentColor = noteColors[noteIndex]; // Set color for the stroke
 }
 
 function mouseReleased() {
