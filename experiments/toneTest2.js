@@ -17,9 +17,9 @@ let currentColor = '#ffffff';
 function preload() {
   // Load guitar samples (make sure you have these samples available)
   guitarSampler = new Tone.Sampler({
-    'C4': 'path/to/guitar_C4.mp3',
-    'D4': 'path/to/guitar_D4.mp3',
-    'E4': 'path/to/guitar_E4.mp3',
+    'C4': 'path/to/guitar_F4.mp3',
+    'D4': 'path/to/guitar_F4.mp3',
+    'E4': 'path/to/guitar_F4.mp3',
     'F4': 'path/to/guitar_F4.mp3',
     'G4': 'path/to/guitar_G4.mp3',
     'A4': 'path/to/guitar_A4.mp3',
