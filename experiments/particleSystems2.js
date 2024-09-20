@@ -1,7 +1,7 @@
 let particles = [];
 let revealedSquares = [];
 const size = 20;
-const colors = ['#00FFFF', '#FF00FF', '#FF0000'];
+const colors = ['#00FF19', '#66FAB3', '#FA9BF2'];
 
 function setup() {
   createCanvas(1000, 1000);
@@ -12,10 +12,9 @@ function setup() {
 class SquareParticle {
   constructor(x, y) {
     this.position = createVector(x, y);
-    //p5.js.org "random2D"
     this.velocity = p5.Vector.random2D().mult(0.2 + random());
-    this.lifespan = 100 + random(100);
-    this.size = size / 4;
+    this.lifespan = 100 + random(100); 
+    this.size = size / 2; 
     this.color = random(colors);
   }
 
@@ -23,13 +22,22 @@ class SquareParticle {
     this.lifespan--;
     this.position.add(this.velocity);
     this.velocity.mult(0.99);
+
+    // ChatGPT to create color shifting
+    let colorIndex = floor(map(this.lifespan, 0, 100, 0, colors.length));
+    let nextColorIndex = (colorIndex + 1) % colors.length; // Get the next color index
+    this.color = lerpColor(color(this.color), color(colors[nextColorIndex]), 0.1);
   }
 
   draw() {
     fill(this.color);
-    stroke(10);
+    //stroke(10);
+    noStroke();
     rectMode(CENTER);
-    ellipse(this.position.x, this.position.y, this.size);
+
+    // Color shifting code used as a base to create particle size changing
+    let dynamicSize = map(this.lifespan, 0, 100, this.size * 2, this.size / 2);
+    ellipse(this.position.x, this.position.y, dynamicSize);
   }
 
   isDead() {
@@ -47,12 +55,10 @@ function generateSquareParticles(x, y) {
 function draw() {
   background(0);
 
-  // Draw revealed squares
   for (let square of revealedSquares) {
     drawSquare(square.x, square.y);
   }
 
-  // Chatgpt to update and draw square particles
   particles = particles.filter(p => {
     p.update();
     p.draw();
@@ -66,7 +72,6 @@ function drawSquare(x, y) {
   stroke(randomColor);
   strokeWeight(2);
   noFill();
-
 }
 
 function mouseClicked() {
@@ -76,5 +81,6 @@ function mouseClicked() {
   if (!revealedSquares.some(PI => PI.x === gridX && PI.y === gridY)) {
     revealedSquares.push({ x: gridX, y: gridY });
   }
+
   generateSquareParticles(gridX, gridY);
 }
