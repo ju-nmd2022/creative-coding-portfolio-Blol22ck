@@ -28,5 +28,10 @@
     "file": "experiments/particleSystems3.js",
     "name": "Velocity Particle System",
     "description": "This variation is changed in velocity creating sort of a bezier curve where it moves slowly at first and then accelerates."
+  },
+  {
+    "file": "experiments/toneTest.js",
+    "name": "Test",
+    "description": "Test"
   }
 ]
