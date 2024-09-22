@@ -33,5 +33,20 @@
     "file": "experiments/toneTest.js",
     "name": "Test",
     "description": "Test"
+  },
+  {
+    "file": "experiments/michaelNoll.js",
+    "name": "Spiky Lines",
+    "description": "Michael Nolls artwork showing straight overlaping lines"
+  },
+  {
+    "file": "experiments/michaelNoll2.js",
+    "name": "Spiky Lines 2",
+    "description": "Moving lines in a fast movement to show the spikyness from the original with fast tuning turns."
+  },
+  {
+    "file": "experiments/michaelNoll3.js",
+    "name": "Spiky Lines 3",
+    "description": "Implementing colors and thicker strokes with a more directional movement, including fading colors."
   }
 ]
