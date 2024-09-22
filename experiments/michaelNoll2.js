@@ -11,8 +11,15 @@ class Agent {
     follow(desiredDirection) {
       desiredDirection = desiredDirection.copy();
       desiredDirection.mult(this.maxSpeed);
+      
+      let randomSteer = p5.Vector.random2D();
+      randomSteer.mult(0.5); 
+      
+      
+      desiredDirection.add(randomSteer);
+      
       let steer = p5.Vector.sub(desiredDirection, this.velocity);
-      steer.limit(this.maxForce);
+      steer.limit(this.maxForce * 10); // Creating sharper turns
       this.applyForce(steer);
     }
   
@@ -48,7 +55,7 @@ class Agent {
   
     draw() {
       push();
-      stroke(0, 0, 0, 40);
+      stroke(0, 0, 0, 80);
       strokeWeight(1);
       line(
         this.lastPosition.x,
@@ -73,7 +80,7 @@ class Agent {
     for (let x = 0; x < maxCols; x++) {
       field.push([]);
       for (let y = 0; y < maxRows; y++) {
-        const value = noise(x / divider, y / divider) * Math.PI * 2;
+        const value = noise(x / (divider / 2), y / (divider / 2)) * Math.PI * 4; // Angular flow
         field[x].push(p5.Vector.fromAngle(value));
       }
     }
@@ -81,18 +88,18 @@ class Agent {
   }
   
   function generateAgents() {
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 200; i++) {
       let agent = new Agent(
         Math.random() * innerWidth,
         Math.random() * innerHeight,
-        4,
-        0.1
+        5, // Slightly faster maxSpeed for more spiky movement
+        0.2 // Increased maxForce for sharper turns
       );
       agents.push(agent);
     }
   }
   
-  const fieldSize = 50;
+  const fieldSize = 100;
   const maxCols = Math.ceil(innerWidth / fieldSize);
   const maxRows = Math.ceil(innerHeight / fieldSize);
   const divider = 4;
@@ -110,4 +117,5 @@ class Agent {
       agent.draw();
     }
   }
-  
+  // ChatpGPT to create sharper lines that correlates to the original sharper artwork
+  // Played around to create it spikier and snappier

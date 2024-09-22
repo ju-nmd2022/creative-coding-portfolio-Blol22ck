@@ -6,6 +6,9 @@ class Agent {
       this.velocity = createVector(0, 0);
       this.maxSpeed = maxSpeed;
       this.maxForce = maxForce;
+      
+      // Assign a random color from the array to each agent
+      this.color = random(colorArray);
     }
   
     follow(desiredDirection) {
@@ -14,7 +17,6 @@ class Agent {
       
       let randomSteer = p5.Vector.random2D();
       randomSteer.mult(0.5); 
-      
       
       desiredDirection.add(randomSteer);
       
@@ -55,8 +57,8 @@ class Agent {
   
     draw() {
       push();
-      stroke(0, 0, 0, 80);
-      strokeWeight(1);
+      stroke(this.color); // Use the agent's assigned color
+      strokeWeight(10);
       line(
         this.lastPosition.x,
         this.lastPosition.y,
@@ -70,6 +72,10 @@ class Agent {
   function setup() {
     createCanvas(1000, 1000);
     background(255, 255, 255);
+    
+    // Define an array of colors
+    colorArray = ['#FF5733', '#33FF57', '#3357FF', '#FF33FF', '#33FFF5', '#FFAA33'];
+  
     field = generateField();
     generateAgents();
   }
@@ -88,23 +94,24 @@ class Agent {
   }
   
   function generateAgents() {
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 100; i++) {
       let agent = new Agent(
         Math.random() * innerWidth,
         Math.random() * innerHeight,
-        5, // Slightly faster maxSpeed for more spiky movement
-        0.2 // Increased maxForce for sharper turns
+        2, // Slightly faster maxSpeed for more spiky movement
+        0.5 // Increased maxForce for sharper turns
       );
       agents.push(agent);
     }
   }
   
-  const fieldSize = 100;
+  const fieldSize = 10;
   const maxCols = Math.ceil(innerWidth / fieldSize);
   const maxRows = Math.ceil(innerHeight / fieldSize);
-  const divider = 4;
+  const divider = 500;
   let field;
   let agents = [];
+  let colorArray; // Color array to store different colors
   
   function draw() {
     for (let agent of agents) {
@@ -117,5 +124,4 @@ class Agent {
       agent.draw();
     }
   }
-  // ChatpGPT to create sharper lines that correlates to the original sharper artwork
-  // Played around to create it spikier and snappier
+  
