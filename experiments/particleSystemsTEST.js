@@ -1,14 +1,14 @@
 let particles = [];
 let revealedSquares = [];
 const size = 20;
-const colors = ['#00FF19', '#66FAB3', '#FA9BF2'];
+const colors = ['#FFF700', '#7BFF00', '#FF001E'];
 
 function setup() {
   createCanvas(1000, 1000);
   background(0);
 }
 
-// Custom Particle Class with Perlin Noise movement and abstract shapes 
+// Custom Particle Class with Perlin Noise movement and abstract shapes
 class CustomParticle {
   constructor(x, y) {
     this.position = createVector(x, y);
@@ -18,17 +18,18 @@ class CustomParticle {
     this.noiseOffset = createVector(random(1000), random(1000)); // Perlin noise offset
   }
 
-  // Using p5.js website about noise as base and tweaking it with chatGPT and playing around with it
   update() {
     this.lifespan--;
-
-    // Perlin noise for smooth flowy movement of the shapes
+    
+    // Using Perlin noise for smooth, organic movement
     let noiseX = noise(this.noiseOffset.x) * 2 - 1;
     let noiseY = noise(this.noiseOffset.y) * 2 - 1;
-    this.position.add(createVector(noiseX, noiseY).mult(2)); // Affects the movement
+    this.position.add(createVector(noiseX, noiseY).mult(2)); // Increase 'mult' for faster movement
 
+    // Slowly move the noise offset for continuous smooth movement
     this.noiseOffset.add(0.01, 0.01);
     
+    // Color shifting as the particle ages
     let colorIndex = floor(map(this.lifespan, 0, 100, 0, colors.length));
     let nextColorIndex = (colorIndex + 1) % colors.length;
     this.color = lerpColor(color(this.color), color(colors[nextColorIndex]), 0.1);
@@ -41,9 +42,9 @@ class CustomParticle {
     // Size change as lifespan decreases
     let dynamicSize = map(this.lifespan, 0, 100, this.size * 2, this.size / 2);
 
-    // Draw an abstract shape, like a polygon
+    // Draw an abstract shape (e.g., star-like polygon)
     beginShape();
-    let numPoints = 5;
+    let numPoints = 5; // Number of points for the star-like shape
     for (let i = 0; i < TWO_PI; i += TWO_PI / numPoints) {
       let radius = dynamicSize / 2 + (i % 2 == 0 ? dynamicSize / 3 : 0); // Create spikes
       let x = this.position.x + cos(i) * radius;
@@ -60,7 +61,7 @@ class CustomParticle {
 
 // Generate particles at the correct position
 function generateSquareParticles(x, y) {
-  for (let i = 0; i < 40; i++) { // Reduced particle count for smoother drawing
+  for (let i = 0; i < 400; i++) {
     particles.push(new CustomParticle(x + random(-size / 2, size / 2), y + random(-size / 2, size / 2)));
   }
 }
@@ -87,7 +88,13 @@ function drawSquare(x, y) {
   noFill();
 }
 
-// Generate particles on mouse drag to simulate drawing effect
-function mouseDragged() {
-  generateSquareParticles(mouseX, mouseY);
+function mouseClicked() {
+  const gridX = Math.floor(mouseX / size) * size + size / 2;
+  const gridY = Math.floor(mouseY / size) * size + size / 2;
+
+  if (!revealedSquares.some(PI => PI.x === gridX && PI.y === gridY)) {
+    revealedSquares.push({ x: gridX, y: gridY });
+  }
+
+  generateSquareParticles(gridX, gridY);
 }

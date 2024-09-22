@@ -33,10 +33,5 @@
     "file": "experiments/toneTest.js",
     "name": "Test",
     "description": "Test"
-  },
-  {
-    "file": "experiments/toneTest2.js",
-    "name": "Test",
-    "description": "Test"
   }
 ]
