@@ -6,22 +6,24 @@ class Agent {
       this.velocity = createVector(0, 0);
       this.maxSpeed = maxSpeed;
       this.maxForce = maxForce;
-      
-      // Assign a random color from the array to each agent
-      this.color = random(colorArray);
+  
+      this.startColor = color(random(colorArray));
+      this.targetColor = color(random(colorArray));
+      this.colorTransitionSpeed = 0.01; // Speed of color fading
+      this.colorLerpAmount = 0; // Progress of color fading
     }
   
     follow(desiredDirection) {
       desiredDirection = desiredDirection.copy();
       desiredDirection.mult(this.maxSpeed);
-      
+  
       let randomSteer = p5.Vector.random2D();
-      randomSteer.mult(0.5); 
-      
+      randomSteer.mult(0.5);
+  
       desiredDirection.add(randomSteer);
-      
+  
       let steer = p5.Vector.sub(desiredDirection, this.velocity);
-      steer.limit(this.maxForce * 10); // Creating sharper turns
+      steer.limit(this.maxForce * 10);
       this.applyForce(steer);
     }
   
@@ -36,6 +38,14 @@ class Agent {
       this.velocity.limit(this.maxSpeed);
       this.position.add(this.velocity);
       this.acceleration.mult(0);
+  
+      // Update the color transition, ChatGPT to fade between the colors from the array
+      this.colorLerpAmount += this.colorTransitionSpeed;
+      if (this.colorLerpAmount > 1) {
+        this.colorLerpAmount = 0;
+        this.startColor = this.targetColor;
+        this.targetColor = color(random(colorArray));
+      }
     }
   
     checkBorders() {
@@ -56,8 +66,10 @@ class Agent {
     }
   
     draw() {
+      let currentColor = lerpColor(this.startColor, this.targetColor, this.colorLerpAmount);
+  
       push();
-      stroke(this.color); // Use the agent's assigned color
+      stroke(currentColor);
       strokeWeight(10);
       line(
         this.lastPosition.x,
@@ -71,9 +83,8 @@ class Agent {
   
   function setup() {
     createCanvas(1000, 1000);
-    background(255, 255, 255);
-    
-    // Define an array of colors
+    background(0, 0, 0);
+  
     colorArray = ['#FF5733', '#33FF57', '#3357FF', '#FF33FF', '#33FFF5', '#FFAA33'];
   
     field = generateField();
@@ -111,7 +122,7 @@ class Agent {
   const divider = 500;
   let field;
   let agents = [];
-  let colorArray; // Color array to store different colors
+  let colorArray;
   
   function draw() {
     for (let agent of agents) {
