@@ -31,8 +31,8 @@
   },
   {
     "file": "experiments/toneTest.js",
-    "name": "Test",
-    "description": "Test"
+    "name": "Stroke Synth",
+    "description": "Magical synth played using a color changing stroke"
   },
   {
     "file": "experiments/michaelNoll.js",
