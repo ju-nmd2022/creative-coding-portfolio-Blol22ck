@@ -64,6 +64,7 @@ class Agent {
         this.lastPosition.y = 0;
       }
     }
+
   
     draw() {
       let currentColor = lerpColor(this.startColor, this.targetColor, this.colorLerpAmount);
@@ -135,4 +136,3 @@ class Agent {
       agent.draw();
     }
   }
-  
